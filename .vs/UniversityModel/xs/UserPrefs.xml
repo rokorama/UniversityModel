@@ -1,0 +1,29 @@
+﻿<Properties StartupConfiguration="{EA026B19-F1BD-42F6-948E-FDF95B51AF49}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Contexts/UniversityDbContext.cs">
+    <Files>
+      <File FileName="Program.cs" Line="1" Column="1" />
+      <File FileName="Contexts/UniversityDbContext.cs" Line="19" Column="52" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="UniversityModel" expanded="True">
+            <Node name="UniversityModel" expanded="True">
+              <Node name="Contexts" expanded="True">
+                <Node name="UniversityDbContext.cs" selected="True" />
+              </Node>
+              <Node name="Controllers" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.UniversityModel PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

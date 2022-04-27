@@ -6,7 +6,8 @@ namespace UniversityModel
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var testMenu = new UniversityInterface();
+            testMenu.MainMenu();
         }
     }
 }

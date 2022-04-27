@@ -3,36 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UniversityModel.Contexts;
 
 namespace UniversityModel.Migrations
 {
     [DbContext(typeof(UniversityDbContext))]
-    partial class UniversityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220425083605_Idk-Anymore")]
+    partial class IdkAnymore
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.16")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("CourseDepartment", b =>
-                {
-                    b.Property<Guid>("CoursesId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("DepartmentsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("CoursesId", "DepartmentsId");
-
-                    b.HasIndex("DepartmentsId");
-
-                    b.ToTable("CourseDepartment");
-                });
 
             modelBuilder.Entity("CourseStudent", b =>
                 {
@@ -61,6 +48,21 @@ namespace UniversityModel.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("UniversityModel.Models.CourseDepartment", b =>
+                {
+                    b.Property<Guid>("CourseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("DepartmentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CourseId", "DepartmentId");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.ToTable("CourseDepartment");
                 });
 
             modelBuilder.Entity("UniversityModel.Models.Department", b =>
@@ -99,21 +101,6 @@ namespace UniversityModel.Migrations
                     b.ToTable("Students");
                 });
 
-            modelBuilder.Entity("CourseDepartment", b =>
-                {
-                    b.HasOne("UniversityModel.Models.Course", null)
-                        .WithMany()
-                        .HasForeignKey("CoursesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("UniversityModel.Models.Department", null)
-                        .WithMany()
-                        .HasForeignKey("DepartmentsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("CourseStudent", b =>
                 {
                     b.HasOne("UniversityModel.Models.Course", null)
@@ -129,6 +116,25 @@ namespace UniversityModel.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("UniversityModel.Models.CourseDepartment", b =>
+                {
+                    b.HasOne("UniversityModel.Models.Course", "Course")
+                        .WithMany("CourseDepartments")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UniversityModel.Models.Department", "Department")
+                        .WithMany("CourseDepartments")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Department");
+                });
+
             modelBuilder.Entity("UniversityModel.Models.Student", b =>
                 {
                     b.HasOne("UniversityModel.Models.Department", "Department")
@@ -138,8 +144,15 @@ namespace UniversityModel.Migrations
                     b.Navigation("Department");
                 });
 
+            modelBuilder.Entity("UniversityModel.Models.Course", b =>
+                {
+                    b.Navigation("CourseDepartments");
+                });
+
             modelBuilder.Entity("UniversityModel.Models.Department", b =>
                 {
+                    b.Navigation("CourseDepartments");
+
                     b.Navigation("Students");
                 });
 #pragma warning restore 612, 618

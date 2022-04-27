@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UniversityModel.Contexts;
 
 namespace UniversityModel.Migrations
 {
     [DbContext(typeof(UniversityDbContext))]
-    partial class UniversityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220419184012_Add-Students-To-Course")]
+    partial class AddStudentsToCourse
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,21 +36,6 @@ namespace UniversityModel.Migrations
                     b.ToTable("CourseDepartment");
                 });
 
-            modelBuilder.Entity("CourseStudent", b =>
-                {
-                    b.Property<Guid>("CoursesId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("StudentsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("CoursesId", "StudentsId");
-
-                    b.HasIndex("StudentsId");
-
-                    b.ToTable("CourseStudent");
-                });
-
             modelBuilder.Entity("UniversityModel.Models.Course", b =>
                 {
                     b.Property<Guid>("Id")
@@ -58,7 +45,12 @@ namespace UniversityModel.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
 
                     b.ToTable("Courses");
                 });
@@ -114,19 +106,11 @@ namespace UniversityModel.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("CourseStudent", b =>
+            modelBuilder.Entity("UniversityModel.Models.Course", b =>
                 {
-                    b.HasOne("UniversityModel.Models.Course", null)
-                        .WithMany()
-                        .HasForeignKey("CoursesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("UniversityModel.Models.Student", null)
-                        .WithMany()
-                        .HasForeignKey("StudentsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Courses")
+                        .HasForeignKey("StudentId");
                 });
 
             modelBuilder.Entity("UniversityModel.Models.Student", b =>
@@ -141,6 +125,11 @@ namespace UniversityModel.Migrations
             modelBuilder.Entity("UniversityModel.Models.Department", b =>
                 {
                     b.Navigation("Students");
+                });
+
+            modelBuilder.Entity("UniversityModel.Models.Student", b =>
+                {
+                    b.Navigation("Courses");
                 });
 #pragma warning restore 612, 618
         }

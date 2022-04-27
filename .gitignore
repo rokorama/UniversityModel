@@ -12,3 +12,7 @@
 *.vsix
 
 *.log
+*.txt
+
+bin/
+obj/
