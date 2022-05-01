@@ -11,6 +11,6 @@ namespace UniversityModel.Contexts
         public DbSet<Student> Students { get; set; }
         
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlServer($"Server=localhost;Database=UniversityModel;User=TestUser;Password=VerySecure1;MultipleActiveResultSets=True");
+            => options.UseSqlServer($"Server=localhost;Database=UniversityModel;Trusted_Connection=True;");
     }
 }
